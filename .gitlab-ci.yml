@@ -1,0 +1,34 @@
+image: docker:latest
+
+services:
+  - docker:dind
+
+stages:
+  - build
+  - test
+
+variables:
+  DOCKER_DRIVER: overlay2
+
+before_script:
+  - docker info
+
+build_image:
+  stage: build
+
+  script:
+    - docker build -t pethero .
+
+  only:
+    - main
+
+test_container:
+  stage: test
+
+  script:
+    - docker build -t pethero .
+    - docker run -d -p 8080:80 --name pethero-test pethero
+    - docker ps
+
+  only:
+    - main
