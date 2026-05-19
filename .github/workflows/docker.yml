@@ -1,0 +1,29 @@
+name: PetHero CI/CD
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+
+  build-and-test:
+
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - name: Clonar repositório
+        uses: actions/checkout@v4
+
+      - name: Build da imagem Docker
+        run: docker build -t pethero .
+
+      - name: Verificar imagens Docker
+        run: docker images
+
+      - name: Rodar container
+        run: docker run -d -p 8080:80 --name pethero-container pethero
+
+      - name: Verificar containers ativos
+        run: docker ps
