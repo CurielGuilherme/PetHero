@@ -10,6 +10,16 @@ pipeline {
             }
         }
 
+        stage('Diagnostico Docker') {
+            steps {
+                sh 'whoami'
+                sh 'pwd'
+                sh 'echo $PATH'
+                sh 'which docker'
+                sh 'docker --version'
+            }
+}
+
         stage('Build Docker') {
             steps {
                 sh 'docker build -t pethero .'
